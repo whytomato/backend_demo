@@ -1,19 +1,4 @@
-...gracefully killing workers...
-Gracefully killing worker 1 (pid: 1164807)...
-Gracefully killing worker 4 (pid: 1164811)...
-Gracefully killing worker 2 (pid: 1164808)...
-Gracefully killing worker 3 (pid: 1164809)...
-worker 1 buried after 1 seconds
-worker 2 buried after 1 seconds
-worker 3 buried after 1 seconds
-worker 4 buried after 1 seconds
-binary reloading uWSGI...
-chdir() to /home/ubuntu/test/backend_demo/demo
-closing all non-uwsgi socket fds > 2 (max_fd = 1024)...
-found fd 3 mapped to socket 0 (127.0.0.1:8000)
-running /usr/local/bin/uwsgi
-[uWSGI] getting INI configuration from uwsgi.ini
-*** Starting uWSGI 2.0.22 (64bit) on [Sat Jul 29 13:32:14 2023] ***
+*** Starting uWSGI 2.0.22 (64bit) on [Sun Jul 30 22:32:03 2023] ***
 compiled with version: 9.3.0 on 28 July 2023 15:43:12
 os: Linux-5.4.0-153-generic #170-Ubuntu SMP Fri Jun 16 13:43:31 UTC 2023
 nodename: VM-8-9-ubuntu
@@ -21,6 +6,7 @@ machine: x86_64
 clock source: unix
 detected number of CPU cores: 2
 current working directory: /home/ubuntu/test/backend_demo/demo
+writing pidfile to uwsgi.pid
 detected binary path: /usr/local/bin/uwsgi
 !!! no internal routing support, rebuild with pcre support !!!
 chdir() to /home/ubuntu/test/backend_demo/demo
@@ -29,26 +15,26 @@ your memory page size is 4096 bytes
 detected max file descriptor number: 1024
 lock engine: pthread robust mutexes
 thunder lock: disabled (you can enable it with --thunder-lock)
-uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 3
+uwsgi socket 0 bound to TCP address 127.0.0.1:8000 fd 3
 Python version: 3.8.10 (default, May 26 2023, 14:05:08)  [GCC 9.4.0]
-Python main interpreter initialized at 0x5556963a05f0
+Python main interpreter initialized at 0x55e38988bd50
 python threads support enabled
 your server socket listen backlog is limited to 100 connections
 your mercy for graceful operations on workers is 60 seconds
 mapped 1031270 bytes (1007 KB) for 8 cores
 *** Operational MODE: preforking+threaded ***
 added /home/ubuntu/miniconda3/envs/django/lib/python3.9/site-packages/ to pythonpath.
-WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x5556963a05f0 pid: 1161417 (default app)
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x55e38988bd50 pid: 1651601 (default app)
 *** uWSGI is running in multiple interpreter mode ***
-gracefully (RE)spawned uWSGI master process (pid: 1161417)
-spawned uWSGI worker 1 (pid: 1164940, cores: 2)
-spawned uWSGI worker 2 (pid: 1164941, cores: 2)
-spawned uWSGI worker 3 (pid: 1164943, cores: 2)
-spawned uWSGI worker 4 (pid: 1164944, cores: 2)
-[pid: 1164943|app: 0|req: 1/1] 1.194.129.186 () {40 vars in 697 bytes} [Sat Jul 29 13:32:22 2023] POST /api/user/register => generated 47 bytes in 71 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
-Not Found: /api
-[pid: 1164940|app: 0|req: 1/2] 180.101.245.253 () {40 vars in 738 bytes} [Sat Jul 29 13:33:01 2023] GET /api => generated 2087 bytes in 40 msecs (HTTP/1.1 404) 7 headers in 229 bytes (1 switches on core 0)
-[pid: 1164944|app: 0|req: 1/3] 1.194.129.186 () {40 vars in 697 bytes} [Sat Jul 29 13:33:41 2023] POST /api/user/register => generated 47 bytes in 48 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
-[pid: 1164944|app: 0|req: 2/4] 1.194.129.186 () {40 vars in 696 bytes} [Sat Jul 29 13:34:10 2023] GET /api/user/register => generated 62 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
-[pid: 1164944|app: 0|req: 3/5] 1.194.129.186 () {40 vars in 697 bytes} [Sat Jul 29 13:34:14 2023] POST /api/user/register => generated 47 bytes in 15 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
-[pid: 1164941|app: 0|req: 1/6] 1.194.129.186 () {40 vars in 697 bytes} [Sat Jul 29 13:37:57 2023] POST /api/user/register => generated 47 bytes in 51 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
+spawned uWSGI master process (pid: 1651601)
+spawned uWSGI worker 1 (pid: 1651604, cores: 2)
+spawned uWSGI worker 2 (pid: 1651605, cores: 2)
+spawned uWSGI worker 3 (pid: 1651607, cores: 2)
+spawned uWSGI worker 4 (pid: 1651608, cores: 2)
+SIGINT/SIGTERM received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+goodbye to uWSGI.
+VACUUM: pidfile removed.

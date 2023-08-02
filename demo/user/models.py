@@ -7,4 +7,14 @@ class User(models.Model):
 
     class Meta:
         db_table = 'user'
+
+class VerificationCode_info(models.Model):
+    email = models.EmailField(unique=True)
+    code = models.CharField(max_length=6)
+    expiration_time = models.DateTimeField()
+
+    def __str__(self):
+        return self.email
+    class Meta:
+        db_table='VerificationCode_info'
 # Create your models here.
