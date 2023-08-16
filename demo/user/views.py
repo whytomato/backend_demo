@@ -1,9 +1,10 @@
 # Create your views here.
 from django.http import JsonResponse
-from user.models import User, VerificationCode_info
+from user.models import User, VerificationCode_info,Login_info
 from django.core.mail import send_mail, EmailMessage
 from django.utils import timezone
-from django.core.cache import cache
+from demo import settings
+from django.db.models import F
 import random
 
 def register(request):  # 继承请求类
@@ -76,4 +77,65 @@ def generate_verification_code():
     code = ''
     for _ in range(6):
         code += str(random.randint(0, 9))
-    return code
+    return 
+    
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(username=username)
+            if user.password == password:
+                id=user.id
+
+                try:
+                    # 尝试获取具有指定 user_id 的记录
+                    login_info = Login_info.objects.get(user_id=id)
+                    # 判断 num 是否等于 5
+                    if login_info.num == 5:
+                        return JsonResponse({'errno': 1004, 'msg': "不能重复登录"})
+                    else:
+                        # 更新 num 字段的值加 1
+                        login_info.num = F('num') + 1
+                        login_info.save()  # 保存更新
+                except Login_info.DoesNotExist:
+                    # 如果没有找到记录，创建新记录并设置 num 为 1
+                    login_info = Login_info.objects.create(user_id=id, num=1)
+
+                return JsonResponse({'errno': 0, 'msg': "登录成功"})
+            else:
+                return JsonResponse({'errno': 1003, 'msg': "密码错误"})
+        except User.DoesNotExist:
+            return JsonResponse({'errno': 1002, 'msg': "用户不存在"})
+    else:
+        return JsonResponse({'errno': 1001, 'msg': "请求方式错误"})
+
+import redis
+
+
+def test(request):
+    if request.method == 'POST':
+        print("test begin")
+        print(request.session.items())
+        request.session['test'] = "test"
+        request.session.modified = True
+        print(request.session.items())
+        
+        session_key = request.session.session_key
+        if session_key:
+            cache = redis.StrictRedis(host='127.0.0.1', port=6379, db=1)
+            session_data = cache.get('django.contrib.sessions.cache:' + session_key)
+            return JsonResponse({'session_data': session_data.decode('utf-8')})
+        else:
+            return JsonResponse({'error': 'No session key found'})
+    else:
+        return JsonResponse({'errno': 1000})
+
+
+
+def test_redis_connection(request):
+    session_key = request.session.session_key
+    cache = redis.StrictRedis(host='127.0.0.1', port=6379, db=1)
+    session_data = cache.get('django.contrib.sessions.cache:' + session_key)
+    return JsonResponse({'session_data': session_data})

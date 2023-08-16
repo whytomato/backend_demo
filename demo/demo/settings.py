@@ -96,6 +96,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "demo.wsgi.application"
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'  # 使用默认缓存别名
+
+# 配置Redis作为缓存后端，使用本地回环地址和默认Redis端口
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',  # 使用本地回环地址和默认Redis端口，1是Redis数据库索引
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
